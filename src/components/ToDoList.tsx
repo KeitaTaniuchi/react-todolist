@@ -1,7 +1,18 @@
 import React from 'react';
 
 const ToDoList = () => {
-  return <h1>ToDoリスト</h1>;
+  return (
+    <table>
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>コメント</th>
+          <th>状態</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+  );
 };
 
 export default ToDoList;

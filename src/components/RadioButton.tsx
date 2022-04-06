@@ -1,7 +1,7 @@
 import React from 'react';
 
 const RadioButton = () => {
-  const radioButtonOptionList = [
+  const radioButtonOptionList: { label: string; value: string }[] = [
     {
       label: '全て',
       value: 'all',
