@@ -1,7 +1,13 @@
 import React from 'react';
 
 const TaskInputForm = () => {
-  return <h1>タスク入力フォーム</h1>;
+  return (
+    <form>
+      <label htmlFor='new-task'>新規タスクの追加</label>
+      <input type='text' id='new-task' name='new-task' placeholder='タスクを入力'></input>
+      <button type='button'>追加</button>
+    </form>
+  );
 };
 
 export default TaskInputForm;
