@@ -1,30 +1,30 @@
 import React from 'react';
-import { NewTask, Status } from './index';
+import { ToDo, Status } from './index';
 
 type Props = {
-  taskArr: NewTask[];
-  setTaskArr: React.Dispatch<React.SetStateAction<NewTask[]>>;
-  filteredTaskArr: NewTask[];
+  tasks: ToDo[];
+  setTasks: React.Dispatch<React.SetStateAction<ToDo[]>>;
+  filteredTasks: ToDo[];
 };
 
 const ToDoList = (props: Props) => {
-  const deleteTask = (id: NewTask['id']) => {
-    const taskArrCopy = [...props.taskArr];
-    taskArrCopy.splice(id, 1);
-    taskArrCopy.forEach((value, index) => {
+  const deleteTask = (id: ToDo['id']) => {
+    const tasksCopy = [...props.tasks];
+    tasksCopy.splice(id, 1);
+    tasksCopy.forEach((value, index) => {
       value.id = index;
     });
-    props.setTaskArr(taskArrCopy);
+    props.setTasks(tasksCopy);
   };
 
-  const changeStatus = (status: Status['label'], id: NewTask['id']) => {
-    const taskArrCopy = [...props.taskArr];
+  const changeStatus = (status: Status['label'], id: ToDo['id']) => {
+    const tasksCopy = [...props.tasks];
     if (status === '作業中') {
-      taskArrCopy[id].status = '完了';
+      tasksCopy[id].status = '完了';
     } else {
-      taskArrCopy[id].status = '作業中';
+      tasksCopy[id].status = '作業中';
     }
-    props.setTaskArr(taskArrCopy);
+    props.setTasks(tasksCopy);
   };
 
   return (
@@ -37,7 +37,7 @@ const ToDoList = (props: Props) => {
         </tr>
       </thead>
       <tbody>
-        {props.filteredTaskArr.map((value, index) => {
+        {props.filteredTasks.map((value, index) => {
           return (
             <tr key={index}>
               <td>{value.id}</td>

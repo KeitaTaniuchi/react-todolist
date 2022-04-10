@@ -1,28 +1,28 @@
 import React, { useState } from 'react';
-import { NewTask, Status } from './index';
+import { ToDo, Status } from './index';
 
 type Props = {
-  taskArr: NewTask[];
-  setTaskArr: React.Dispatch<React.SetStateAction<NewTask[]>>;
+  tasks: ToDo[];
+  setTasks: React.Dispatch<React.SetStateAction<ToDo[]>>;
   status: Status['value'];
 };
 
 const TaskInputForm = (props: Props) => {
-  const [inputValue, setInputValue] = useState<NewTask['task']>('');
+  const [inputValue, setInputValue] = useState<ToDo['task']>('');
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInputValue(e.target.value);
   };
 
   const addNewTask = () => {
-    const newTask: NewTask = {
-      id: props.taskArr.length,
+    const newTask: ToDo = {
+      id: props.tasks.length,
       task: inputValue,
       status: '作業中',
     };
 
     if (!inputValue) return;
-    props.setTaskArr([...props.taskArr, newTask]);
+    props.setTasks([...props.tasks, newTask]);
     setInputValue('');
   };
 

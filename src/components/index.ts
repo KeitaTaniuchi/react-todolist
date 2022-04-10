@@ -1,4 +1,4 @@
-export type NewTask = {
+export type ToDo = {
   id: number;
   task: string;
   status: Status['label'];

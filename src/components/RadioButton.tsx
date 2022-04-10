@@ -1,8 +1,8 @@
 import React from 'react';
-import { NewTask, Status } from './index';
+import { ToDo, Status } from './index';
 
 type Props = {
-  taskArr: NewTask[];
+  tasks: ToDo[];
   setStatus: React.Dispatch<React.SetStateAction<Status['value']>>;
 };
 
