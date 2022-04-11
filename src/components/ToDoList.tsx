@@ -1,29 +1,27 @@
 import React from 'react';
-import { ToDo, Status } from './index';
+import { decideLabel } from 'utils/decideLabel';
+import { ToDo, StatusEn } from 'types/index';
 
 type Props = {
   tasks: ToDo[];
-  setTasks: React.Dispatch<React.SetStateAction<ToDo[]>>;
+  setTasks: (tasks: ToDo[]) => void;
   filteredTasks: ToDo[];
 };
 
-const ToDoList = (props: Props) => {
-  const deleteTask = (id: ToDo['id']) => {
+const ToDoList: React.FC<Props> = (props) => {
+  const deleteTask = (id: number) => {
     const tasksCopy = [...props.tasks];
-    tasksCopy.splice(id, 1);
-    tasksCopy.forEach((value, index) => {
+    const deletedTasks = tasksCopy.filter((value) => value.id !== id);
+    /* 以下の記述は、タスク削除後にIDを0から振り直すためのコード */
+    deletedTasks.forEach((value, index) => {
       value.id = index;
     });
-    props.setTasks(tasksCopy);
+    props.setTasks(deletedTasks);
   };
 
-  const changeStatus = (status: Status['label'], id: ToDo['id']) => {
+  const changeStatus = (status: StatusEn, id: number) => {
     const tasksCopy = [...props.tasks];
-    if (status === '作業中') {
-      tasksCopy[id].status = '完了';
-    } else {
-      tasksCopy[id].status = '作業中';
-    }
+    status === 'inWork' ? (tasksCopy[id].status = 'completed') : (tasksCopy[id].status = 'inWork');
     props.setTasks(tasksCopy);
   };
 
@@ -37,33 +35,31 @@ const ToDoList = (props: Props) => {
         </tr>
       </thead>
       <tbody>
-        {props.filteredTasks.map((value, index) => {
-          return (
-            <tr key={index}>
-              <td>{value.id}</td>
-              <td>{value.task}</td>
-              <td>
-                <button
-                  onClick={() => {
-                    changeStatus(value.status, value.id);
-                  }}
-                >
-                  {value.status}
-                </button>
-              </td>
-              <td>
-                <button
-                  type='button'
-                  onClick={() => {
-                    deleteTask(value.id);
-                  }}
-                >
-                  削除
-                </button>
-              </td>
-            </tr>
-          );
-        })}
+        {props.filteredTasks.map((value, index) => (
+          <tr key={index}>
+            <td>{value.id}</td>
+            <td>{value.task}</td>
+            <td>
+              <button
+                onClick={() => {
+                  changeStatus(value.status, value.id);
+                }}
+              >
+                {decideLabel(value.status)}
+              </button>
+            </td>
+            <td>
+              <button
+                type='button'
+                onClick={() => {
+                  deleteTask(value.id);
+                }}
+              >
+                削除
+              </button>
+            </td>
+          </tr>
+        ))}
       </tbody>
     </table>
   );

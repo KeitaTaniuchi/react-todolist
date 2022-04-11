@@ -1,49 +1,35 @@
 import React from 'react';
-import { ToDo, Status } from './index';
+import { decideLabel } from 'utils/decideLabel';
+import { ToDo, StatusEn } from 'types/index';
 
 type Props = {
   tasks: ToDo[];
-  setStatus: React.Dispatch<React.SetStateAction<Status['value']>>;
+  setStatus: (status: StatusEn) => void;
 };
 
-const RadioButton = (props: Props) => {
-  const radioButtonOptionList: Status[] = [
-    {
-      label: '全て',
-      value: 'all',
-    },
-    {
-      label: '作業中',
-      value: 'inWork',
-    },
-    {
-      label: '完了',
-      value: 'completed',
-    },
-  ];
+const RadioButton: React.FC<Props> = (props) => {
+  const radioButtonOptions: StatusEn[] = ['all', 'inWork', 'completed'];
 
-  const changeStatus = (value: Status['value']) => {
+  const changeStatus = (value: StatusEn) => {
     props.setStatus(value);
   };
 
   return (
     <form>
-      {radioButtonOptionList.map((radioButtonOption, index) => {
-        return (
-          <label key={index}>
-            <input
-              type='radio'
-              name='status'
-              defaultChecked={radioButtonOption.label === '全て'}
-              value={radioButtonOption.value}
-              onChange={() => {
-                changeStatus(radioButtonOption.value);
-              }}
-            />
-            {radioButtonOption.label}
-          </label>
-        );
-      })}
+      {radioButtonOptions.map((radioButtonOption, index) => (
+        <label key={index}>
+          <input
+            type='radio'
+            name='status'
+            defaultChecked={radioButtonOption === 'all'}
+            value={radioButtonOption}
+            onChange={() => {
+              changeStatus(radioButtonOption);
+            }}
+          />
+          {decideLabel(radioButtonOption)}
+        </label>
+      ))}
     </form>
   );
 };

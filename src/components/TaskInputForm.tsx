@@ -1,29 +1,26 @@
 import React, { useState } from 'react';
-import { ToDo, Status } from './index';
+import { ToDo, StatusEn } from 'types/index';
 
 type Props = {
   tasks: ToDo[];
-  setTasks: React.Dispatch<React.SetStateAction<ToDo[]>>;
-  status: Status['value'];
+  setTasks: (tasks: ToDo[]) => void;
+  status: StatusEn;
 };
 
-const TaskInputForm = (props: Props) => {
-  const [inputValue, setInputValue] = useState<ToDo['task']>('');
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setInputValue(e.target.value);
-  };
+const TaskInputForm: React.FC<Props> = (props) => {
+  const [inputTask, setInputTask] = useState('');
 
   const addNewTask = () => {
+    if (!inputTask) return;
+
     const newTask: ToDo = {
       id: props.tasks.length,
-      task: inputValue,
-      status: '作業中',
+      task: inputTask,
+      status: 'inWork',
     };
 
-    if (!inputValue) return;
     props.setTasks([...props.tasks, newTask]);
-    setInputValue('');
+    setInputTask('');
   };
 
   return (
@@ -33,8 +30,8 @@ const TaskInputForm = (props: Props) => {
         type='text'
         id='new-task'
         name='new-task'
-        value={inputValue}
-        onChange={handleChange}
+        value={inputTask}
+        onChange={(e) => setInputTask(e.target.value)}
         placeholder='タスクを入力'
       ></input>
       <button type='button' onClick={addNewTask}>
