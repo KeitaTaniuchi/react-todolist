@@ -1,25 +1,24 @@
 import React, { useState } from 'react';
-import { ToDo, StatusEn } from 'types/index';
+import { ToDo } from 'types/ToDo';
 
 type Props = {
   tasks: ToDo[];
   setTasks: (tasks: ToDo[]) => void;
-  status: StatusEn;
 };
 
-const TaskInputForm: React.FC<Props> = (props) => {
+const TaskInputForm: React.FC<Props> = ({ tasks, setTasks }) => {
   const [inputTask, setInputTask] = useState('');
 
   const addNewTask = () => {
     if (!inputTask) return;
 
     const newTask: ToDo = {
-      id: props.tasks.length,
+      id: tasks.length,
       task: inputTask,
       status: 'inWork',
     };
 
-    props.setTasks([...props.tasks, newTask]);
+    setTasks([...tasks, newTask]);
     setInputTask('');
   };
 

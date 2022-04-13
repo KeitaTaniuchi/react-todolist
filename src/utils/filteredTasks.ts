@@ -1,4 +1,5 @@
-import { ToDo, StatusEn } from 'types/index';
+import { StatusEn } from 'types/StatusEn';
+import { ToDo } from 'types/ToDo';
 
 export const filteredTasks = (tasks: ToDo[], status: StatusEn): ToDo[] => {
   switch (status) {

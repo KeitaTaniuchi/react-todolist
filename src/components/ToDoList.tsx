@@ -1,6 +1,7 @@
 import React from 'react';
 import { decideLabel } from 'utils/decideLabel';
-import { ToDo, StatusEn } from 'types/index';
+import { StatusEn } from 'types/StatusEn';
+import { ToDo } from 'types/ToDo';
 
 type Props = {
   tasks: ToDo[];
@@ -8,21 +9,21 @@ type Props = {
   filteredTasks: ToDo[];
 };
 
-const ToDoList: React.FC<Props> = (props) => {
+const ToDoList: React.FC<Props> = ({ tasks, setTasks, filteredTasks }) => {
   const deleteTask = (id: number) => {
-    const tasksCopy = [...props.tasks];
+    const tasksCopy = [...tasks];
     const deletedTasks = tasksCopy.filter((value) => value.id !== id);
     /* 以下の記述は、タスク削除後にIDを0から振り直すためのコード */
     deletedTasks.forEach((value, index) => {
       value.id = index;
     });
-    props.setTasks(deletedTasks);
+    setTasks(deletedTasks);
   };
 
   const changeStatus = (status: StatusEn, id: number) => {
-    const tasksCopy = [...props.tasks];
+    const tasksCopy = [...tasks];
     status === 'inWork' ? (tasksCopy[id].status = 'completed') : (tasksCopy[id].status = 'inWork');
-    props.setTasks(tasksCopy);
+    setTasks(tasksCopy);
   };
 
   return (
@@ -35,7 +36,7 @@ const ToDoList: React.FC<Props> = (props) => {
         </tr>
       </thead>
       <tbody>
-        {props.filteredTasks.map((value, index) => (
+        {filteredTasks.map((value, index) => (
           <tr key={index}>
             <td>{value.id}</td>
             <td>{value.task}</td>

@@ -3,7 +3,8 @@ import RadioButton from 'components/RadioButton';
 import ToDoList from 'components/ToDoList';
 import TaskInputForm from 'components/TaskInputForm';
 import { filteredTasks } from 'utils/filteredTasks';
-import { ToDo, StatusEn } from 'types/index';
+import { StatusEn } from 'types/StatusEn';
+import { ToDo } from 'types/ToDo';
 
 function App() {
   const [tasks, setTasks] = useState<ToDo[]>([]);
@@ -12,9 +13,9 @@ function App() {
   return (
     <>
       <h1>ToDoリスト</h1>
-      <RadioButton tasks={tasks} setStatus={setStatus} />
+      <RadioButton setStatus={setStatus} />
       <ToDoList tasks={tasks} setTasks={setTasks} filteredTasks={filteredTasks(tasks, status)} />
-      <TaskInputForm tasks={tasks} setTasks={setTasks} status={status} />
+      <TaskInputForm tasks={tasks} setTasks={setTasks} />
     </>
   );
 }

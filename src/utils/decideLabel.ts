@@ -1,4 +1,6 @@
-import { StatusEn, StatusJp } from 'types/index';
+import { StatusEn } from 'types/StatusEn';
+
+type StatusJp = '全て' | '作業中' | '完了';
 
 export const decideLabel = (status: StatusEn): StatusJp => {
   switch (status) {

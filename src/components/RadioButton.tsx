@@ -1,17 +1,16 @@
 import React from 'react';
 import { decideLabel } from 'utils/decideLabel';
-import { ToDo, StatusEn } from 'types/index';
+import { StatusEn } from 'types/StatusEn';
 
 type Props = {
-  tasks: ToDo[];
   setStatus: (status: StatusEn) => void;
 };
 
-const RadioButton: React.FC<Props> = (props) => {
+const RadioButton: React.FC<Props> = ({ setStatus }) => {
   const radioButtonOptions: StatusEn[] = ['all', 'inWork', 'completed'];
 
   const changeStatus = (value: StatusEn) => {
-    props.setStatus(value);
+    setStatus(value);
   };
 
   return (
